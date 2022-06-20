@@ -1,6 +1,6 @@
 import { Layout, Menu } from "antd";
 import { Routes, Route, Link } from "react-router-dom";
-import CounterPage from './features/counter/CounterPage'
+import CounterPage from "./features/counter/CounterPage";
 import React from "react";
 
 const { Header, Content, Footer } = Layout;
@@ -21,7 +21,7 @@ const App: React.FC = () => (
       <div className="site-layout-content">
         <Routes>
           <Route path="/" element={<h1>posts</h1>} />
-          <Route path="counter" element={<CounterPage/>} />
+          <Route path="counter" element={<CounterPage />} />
         </Routes>
       </div>
     </Content>
