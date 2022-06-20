@@ -17,7 +17,7 @@ const pages = [
 ] as any;
 
 const App: React.FC = () => {
-  let location = useLocation();
+  const location = useLocation();
 
   return (
     <Layout className="layout">
