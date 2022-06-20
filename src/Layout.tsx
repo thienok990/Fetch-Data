@@ -23,12 +23,7 @@ const App: React.FC = () => {
     <Layout className="layout">
       <Header>
         <div className="logo" />
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          selectedKeys={[location.pathname]}
-          items={pages}
-        />
+        <Menu theme="dark" mode="horizontal" selectedKeys={[location.pathname]} items={pages} />
       </Header>
       <Content style={{ padding: "0 50px" }}>
         <div className="site-layout-content">
@@ -38,9 +33,7 @@ const App: React.FC = () => {
           </Routes>
         </div>
       </Content>
-      <Footer style={{ textAlign: "center" }}>
-        Ant Design ©2018 Created by Ant UED
-      </Footer>
+      <Footer style={{ textAlign: "center" }}>Ant Design ©2018 Created by Ant UED</Footer>
     </Layout>
   );
 };
