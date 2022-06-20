@@ -4,18 +4,28 @@ import CounterPage from "./features/counter/CounterPage";
 import React from "react";
 
 const { Header, Content, Footer } = Layout;
+
+const pages = [
+  {
+    key: "posts",
+    label: <Link to="/">Posts</Link>,
+  },
+  {
+    key: "counter",
+    label: <Link to="/counter">Counter</Link>,
+  },
+] as any;
+
 const App: React.FC = () => (
   <Layout className="layout">
     <Header>
       <div className="logo" />
-      <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["post"]}>
-        <Menu.Item key="posts">
-          <Link to="/">Posts</Link>
-        </Menu.Item>
-        <Menu.Item key="counter">
-          <Link to="/counter">Counter</Link>
-        </Menu.Item>
-      </Menu>
+      <Menu
+        theme="dark"
+        mode="horizontal"
+        defaultSelectedKeys={["posts"]}
+        items={pages}
+      />
     </Header>
     <Content style={{ padding: "0 50px" }}>
       <div className="site-layout-content">
