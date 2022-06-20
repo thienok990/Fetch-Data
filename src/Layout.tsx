@@ -1,14 +1,15 @@
 import { Layout, Menu } from "antd";
 import { Routes, Route, Link, useLocation } from "react-router-dom";
 import CounterPage from "./features/counter/CounterPage";
+import PostPage from "./features/posts/PostsPage";
 import React from "react";
 
 const { Header, Content, Footer } = Layout;
 
 const pages = [
   {
-    key: "/",
-    label: <Link to="/">Posts</Link>,
+    key: "/post",
+    label: <Link to="/post">Posts</Link>,
   },
   {
     key: "/counter",
@@ -28,7 +29,7 @@ const App: React.FC = () => {
       <Content style={{ padding: "0 50px" }}>
         <div className="site-layout-content">
           <Routes>
-            <Route path="/" element={<h1>posts</h1>} />
+            <Route path="/post" element={<PostPage />} />
             <Route path="/counter" element={<CounterPage />} />
           </Routes>
         </div>
