@@ -1,41 +1,41 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { fetchPosts, fetchPostsByUserId } from "./PostsSlice";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { Table } from "antd";
+
 function PostsPage() {
-  const dataSource = [
-    {
-      key: "1",
-      name: "Mike",
-      age: 32,
-      address: "10 Downing Street",
-    },
-    {
-      key: "2",
-      name: "John",
-      age: 42,
-      address: "10 Downing Street",
-    },
-  ];
+  const dispatch = useAppDispatch();
+  const dataSource = useAppSelector((state) => state.post.posts);
+  useEffect(() => {
+    dispatch(fetchPosts());
+  }, []);
 
   const columns = [
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
     },
     {
-      title: "Age",
-      dataIndex: "age",
-      key: "age",
+      title: "User Id",
+      dataIndex: "userId",
+      key: "userId",
     },
     {
-      title: "Address",
-      dataIndex: "address",
-      key: "address",
+      title: "Title",
+      dataIndex: "title",
+      key: "title",
+    },
+    {
+      title: "Body",
+      dataIndex: "body",
+      key: "body",
     },
   ];
+
   return (
     <div>
-      <Table dataSource={dataSource} columns={columns} />
+      <Table dataSource={dataSource} columns={columns} rowKey="id" />
     </div>
   );
 }
