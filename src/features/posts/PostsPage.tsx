@@ -1,5 +1,5 @@
-import React from "react";
 import { Table } from "antd";
+
 function PostsPage() {
   const dataSource = [
     {
