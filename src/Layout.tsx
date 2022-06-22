@@ -29,6 +29,7 @@ const App: React.FC = () => {
       <Content style={{ padding: "0 50px" }}>
         <div className="site-layout-content">
           <Routes>
+            <Route path="/" element={<h1>posts</h1>} />
             <Route path="/post" element={<PostPage />} />
             <Route path="/counter" element={<CounterPage />} />
           </Routes>
