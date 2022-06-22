@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { postApi } from "../../services/post";
 
 export interface Post {
   userId: number;
@@ -40,7 +41,6 @@ export const fetchPostsByUserId = createAsyncThunk(
     }
   }
 );
-
 const initialState: PostsState = {
   posts: [],
 };
@@ -48,24 +48,22 @@ const initialState: PostsState = {
 export const PostsSlice = createSlice({
   name: "post",
   initialState,
-  reducers: {},
+  reducers: {
+    setPosts: (state, action) => {
+      state.posts = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchPosts.fulfilled, (state, action) => {
-        state.posts = action.payload;
+      .addMatcher(postApi.endpoints.getPosts.matchFulfilled, (state, action) => {
+        state.posts = action.payload.posts;
       })
-      .addCase(fetchPosts.rejected, (state, action) => {
-        console.log("error", action);
-      });
-
-    builder
-      .addCase(fetchPostsByUserId.fulfilled, (state, action) => {
-        state.posts = action.payload;
-      })
-      .addCase(fetchPostsByUserId.rejected, (state, action) => {
-        console.log("error", action);
+      .addMatcher(postApi.endpoints.getPosts.matchRejected, (state, action) => {
+        // Handle Error
       });
   },
 });
+
+export const { setPosts } = PostsSlice.actions;
 
 export default PostsSlice.reducer;
