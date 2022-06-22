@@ -1,5 +1,5 @@
 import { Layout, Menu } from "antd";
-import { Routes, Route, Link, useLocation } from "react-router-dom";
+import { Routes, Route, Link, useLocation, Navigate } from "react-router-dom";
 import CounterPage from "./features/counter/CounterPage";
 import PostPage from "./features/posts/PostsPage";
 import React from "react";
@@ -29,6 +29,7 @@ const App: React.FC = () => {
       <Content style={{ padding: "0 50px" }}>
         <div className="site-layout-content">
           <Routes>
+            <Route path="/" element={<Navigate to="/post" replace={true} />} />
             <Route path="/post" element={<PostPage />} />
             <Route path="/counter" element={<CounterPage />} />
           </Routes>

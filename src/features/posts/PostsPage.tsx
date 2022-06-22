@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { fetchPosts, fetchPostsByUserId } from "./PostsSlice";
+import { fetchPosts } from "./PostsSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { Table } from "antd";
 
