@@ -8,7 +8,9 @@ export interface Post {
 }
 export interface PostsState {
   posts: Post[];
+  selectedPost: Post | null;
 }
+
 export const fetchPosts = createAsyncThunk("post/fetchPosts", async (_, thunkAPI) => {
   try {
     const result = await fetch(`http://localhost:3004/posts`).then((response) => {
@@ -22,6 +24,7 @@ export const fetchPosts = createAsyncThunk("post/fetchPosts", async (_, thunkAPI
     return thunkAPI.rejectWithValue("Fetching failed");
   }
 });
+
 export const fetchPostsByUserId = createAsyncThunk(
   "post/fetchPostsByUserId",
   async (userId: number, thunkAPI) => {
@@ -40,8 +43,10 @@ export const fetchPostsByUserId = createAsyncThunk(
     }
   }
 );
+
 const initialState: PostsState = {
   posts: [],
+  selectedPost: null,
 };
 
 export const PostsSlice = createSlice({
@@ -50,6 +55,9 @@ export const PostsSlice = createSlice({
   reducers: {
     setPosts: (state, action) => {
       state.posts = action.payload;
+    },
+    selectPost: (state, action) => {
+      state.selectedPost = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -63,6 +71,6 @@ export const PostsSlice = createSlice({
   },
 });
 
-export const { setPosts } = PostsSlice.actions;
+export const { setPosts, selectPost } = PostsSlice.actions;
 
 export default PostsSlice.reducer;
