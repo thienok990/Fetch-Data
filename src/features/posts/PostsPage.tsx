@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { fetchPosts } from "./PostsSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { Table, Pagination } from "antd";
 import { useGetPostsQuery } from "../../services/post";
@@ -26,6 +27,7 @@ const columns = [
     key: "body",
   },
 ];
+
 function PostsPage() {
   const dispatch = useAppDispatch();
   const dataSource = useAppSelector((state) => state.post.posts);
