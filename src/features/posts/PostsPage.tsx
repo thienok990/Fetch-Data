@@ -9,6 +9,8 @@ function PostsPage() {
   const dispatch = useAppDispatch();
   const dataSource = useAppSelector((state) => state.post.posts);
   const selectedPost = useAppSelector((state) => state.post.selectedPost);
+  const editPost = { ...selectedPost };
+
   const columns = [
     {
       title: "ID",
@@ -93,7 +95,7 @@ function PostsPage() {
           onShowSizeChange={handleChangeSize}
         />
       )}
-      <DrawerPost visible={visible} setVisible={setVisible} selectedPost={selectedPost} />
+      <DrawerPost visible={visible} setVisible={setVisible} editPost={editPost} />
     </div>
   );
 }
