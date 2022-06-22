@@ -29,7 +29,7 @@ const App: React.FC = () => {
       <Content style={{ padding: "0 50px" }}>
         <div className="site-layout-content">
           <Routes>
-            <Route path="/" element={<Navigate to="Post" />} />
+            <Route path="/" element={<Navigate to="/post" replace={true} />} />
             <Route path="/post" element={<PostPage />} />
             <Route path="/counter" element={<CounterPage />} />
           </Routes>
