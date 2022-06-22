@@ -1,18 +1,19 @@
 import { Drawer, Button, Space } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import TextArea from "antd/lib/input/TextArea";
-import { changeSelectedPostTitle, changeSelectedPostBody } from "./PostsSlice";
+import { changeSelectedPostTitle, changeSelectedPostBody, selectPost } from "./PostsSlice";
 import { useAppDispatch } from "../../app/hooks";
 import { useUpdatePostMutation } from "../../services/post";
 
 export const DrawerPost = (props: any) => {
   const { visible, setVisible, editPost } = props;
-  const dispatch = useAppDispatch();
 
+  const dispatch = useAppDispatch();
   const [updatePost, { isLoading }] = useUpdatePostMutation();
 
   const onClose = () => {
     setVisible(false);
+    dispatch(selectPost(null));
   };
   const handleChangeTitle = (event: any) => {
     dispatch(changeSelectedPostTitle(event.target.value));

@@ -6,9 +6,9 @@ import { selectPost, setPosts } from "./PostsSlice";
 import DrawerPost from "./DrawerPost";
 
 function PostsPage() {
-  const dispatch = useAppDispatch();
   const dataSource = useAppSelector((state) => state.post.posts);
   const selectedPost = useAppSelector((state) => state.post.selectedPost);
+  const dispatch = useAppDispatch();
 
   const columns = [
     {
@@ -64,12 +64,10 @@ function PostsPage() {
   const handleChangePage = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
-
   const handleChangeSize = (currentPage: number, size: number) => {
     setCurrentPage(currentPage);
     setLimit(size);
   };
-
   const showDrawer = () => {
     setVisible(true);
   };
@@ -94,7 +92,9 @@ function PostsPage() {
           onShowSizeChange={handleChangeSize}
         />
       )}
-      <DrawerPost visible={visible} setVisible={setVisible} editPost={selectedPost} />
+      {selectedPost && (
+        <DrawerPost visible={visible} setVisible={setVisible} editPost={selectedPost} />
+      )}
     </div>
   );
 }
