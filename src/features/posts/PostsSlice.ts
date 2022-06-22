@@ -8,6 +8,7 @@ export interface Post {
 export interface PostsState {
   posts: Post[];
 }
+
 const initialState: PostsState = {
   posts: [
     {
