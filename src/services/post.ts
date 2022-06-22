@@ -4,9 +4,11 @@ type postsQuery = {
   page: number;
   limit: number;
 };
+
 export const postApi = createApi({
   reducerPath: "postApi",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3004/posts" }),
+  tagTypes: ["Post"],
   endpoints: (builder) => ({
     getPosts: builder.query<{ posts: Post[]; total: number }, postsQuery>({
       query: ({ page, limit }) => `?_page=${page}&_limit=${limit}`,
@@ -16,8 +18,21 @@ export const postApi = createApi({
           total: Number(meta?.response?.headers.get("X-Total-Count")),
         };
       },
+      providesTags: ["Post"],
+    }),
+    updatePost: builder.mutation<Post, Post>({
+      query: ({ id, userId, title, body }) => ({
+        url: `/${id}`,
+        method: "PUT",
+        body: {
+          userId,
+          title,
+          body,
+        },
+      }),
+      invalidatesTags: ["Post"],
     }),
   }),
 });
 
-export const { useGetPostsQuery } = postApi;
+export const { useGetPostsQuery, useUpdatePostMutation } = postApi;
