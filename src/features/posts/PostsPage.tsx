@@ -93,7 +93,9 @@ function PostsPage() {
           onShowSizeChange={handleChangeSize}
         />
       )}
-      <DrawerPost visible={visible} setVisible={setVisible} selectedPost={selectedPost} />
+      {selectedPost && (
+        <DrawerPost visible={visible} setVisible={setVisible} selectedPost={selectedPost} />
+      )}
     </div>
   );
 }
