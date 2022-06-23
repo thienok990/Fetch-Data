@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { fetchPosts } from "./PostsSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { Table, Pagination, Space, Button } from "antd";
 import { useGetPostsQuery } from "../../services/post";
