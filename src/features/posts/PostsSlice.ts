@@ -60,6 +60,16 @@ export const PostsSlice = createSlice({
     selectPost: (state, action) => {
       state.selectedPost = action.payload;
     },
+    changeSelectedPostTitle: (state, action) => {
+      if (state.selectedPost != null) {
+        state.selectedPost.title = action.payload;
+      }
+    },
+    changeSelectedPostBody: (state, action) => {
+      if (state.selectedPost != null) {
+        state.selectedPost.body = action.payload;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -72,6 +82,7 @@ export const PostsSlice = createSlice({
   },
 });
 
-export const { setPosts, selectPost } = PostsSlice.actions;
+export const { setPosts, selectPost, changeSelectedPostTitle, changeSelectedPostBody } =
+  PostsSlice.actions;
 
 export default PostsSlice.reducer;

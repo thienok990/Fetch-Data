@@ -9,6 +9,7 @@ export const store = configureStore({
     post: postReducer,
     [postApi.reducerPath]: postApi.reducer,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(postApi.middleware),
 });
 
 export type AppDispatch = typeof store.dispatch;

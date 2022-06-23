@@ -1,12 +1,28 @@
 import { Drawer, Button, Space } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import TextArea from "antd/lib/input/TextArea";
+import { changeSelectedPostTitle, changeSelectedPostBody, selectPost } from "./PostsSlice";
+import { useAppDispatch } from "../../app/hooks";
+import { useUpdatePostMutation } from "../../services/post";
 
 export const DrawerPost = (props: any) => {
-  const { visible, setVisible, selectedPost } = props;
+  const { visible, setVisible, editPost } = props;
+
+  const dispatch = useAppDispatch();
+  const [updatePost, { isLoading }] = useUpdatePostMutation();
 
   const onClose = () => {
     setVisible(false);
+    dispatch(selectPost(null));
+  };
+  const handleChangeTitle = (event: any) => {
+    dispatch(changeSelectedPostTitle(event.target.value));
+  };
+  const handleChangeBody = (event: any) => {
+    dispatch(changeSelectedPostBody(event.target.value));
+  };
+  const handleSave = () => {
+    updatePost({ ...editPost });
   };
 
   return (
@@ -22,7 +38,7 @@ export const DrawerPost = (props: any) => {
             <Button type="primary" onClick={onClose}>
               Cancel
             </Button>
-            <Button type="primary" onClick={onClose}>
+            <Button type="primary" onClick={handleSave} loading={isLoading}>
               Save
             </Button>
           </Space>
@@ -30,15 +46,25 @@ export const DrawerPost = (props: any) => {
       >
         <h1>
           <UserOutlined />
-          {selectedPost.userId}
+          {editPost.userId}
         </h1>
         <h1>
           Title:
-          <TextArea showCount style={{ height: 120 }} value={selectedPost.title} />
+          <TextArea
+            showCount
+            style={{ height: 120 }}
+            value={editPost.title}
+            onChange={handleChangeTitle}
+          />
         </h1>
         <h1>
           Body:
-          <TextArea showCount style={{ height: 240 }} value={selectedPost.body} />
+          <TextArea
+            showCount
+            style={{ height: 240 }}
+            value={editPost.body}
+            onChange={handleChangeBody}
+          />
         </h1>
       </Drawer>
     </div>
