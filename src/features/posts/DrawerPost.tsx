@@ -1,6 +1,7 @@
 import { Drawer, Button, Space } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import TextArea from "antd/lib/input/TextArea";
+
 export const DrawerPost = (props: any) => {
   const { visible, setVisible, selectedPost } = props;
 
