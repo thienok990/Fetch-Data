@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { Table, Pagination, Space, Button } from "antd";
-import { useGetPostsQuery } from "../../services/post";
+import { useGetPostsQuery, useDeletePostMutation } from "../../services/post";
 import { selectPost, setPosts } from "./PostsSlice";
 import DrawerPost from "./DrawerPost";
 
 function PostsPage() {
   const dataSource = useAppSelector((state) => state.post.posts);
   const selectedPost = useAppSelector((state) => state.post.selectedPost);
+
   const dispatch = useAppDispatch();
+  const [deletePost, { isLoading: isDeleting }] = useDeletePostMutation();
 
   const columns = [
     {
@@ -44,6 +46,15 @@ function PostsPage() {
             }}
           >
             Edit
+          </Button>
+          <Button
+            danger
+            loading={isDeleting}
+            onClick={() => {
+              deletePost(action);
+            }}
+          >
+            Delete
           </Button>
         </Space>
       ),
