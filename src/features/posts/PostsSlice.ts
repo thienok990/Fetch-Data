@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { postApi } from "../../services/post";
+
 export interface Post {
   userId: number;
   id: number;
