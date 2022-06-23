@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { fetchPosts } from "./PostsSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { Table, Pagination } from "antd";
 import { useGetPostsQuery } from "../../services/post";
@@ -39,6 +38,7 @@ function PostsPage() {
 
   useEffect(() => {
     dispatch(setPosts(data?.posts));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   const handleChangePage = (pageNumber: number) => {
