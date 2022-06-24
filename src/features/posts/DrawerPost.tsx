@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 const initialNewPost = { id: 0, userId: 1, title: "", body: "" };
 
 export const DrawerPost = (props: any) => {
-  const { visible, setVisible, editPost, mode } = props;
+  const { visible, setVisible, selectedPost, mode } = props;
 
   const dispatch = useAppDispatch();
   const [updatePost, { isLoading }] = useUpdatePostMutation();
@@ -18,13 +18,15 @@ export const DrawerPost = (props: any) => {
 
   const onClose = () => {
     setVisible(false);
-    dispatch(selectPost(null));
   };
   const handleChangeBody = (event: any) => {
     dispatch(changeSelectedPostBody(event.target.value));
   };
+  const handleChangeTitle = (event: any) => {
+    dispatch(changeSelectedPostTitle(event.target.value));
+  };
   const handleSave = () => {
-    updatePost({ ...editPost });
+    updatePost({ ...selectedPost });
   };
   const handleCreateUserId = (value: any) => {
     setPost({ ...post, userId: value });
@@ -34,9 +36,6 @@ export const DrawerPost = (props: any) => {
   };
   const handleCreateBody = (event: any) => {
     setPost({ ...post, body: event.target.value });
-  };
-  const handleChangeTitle = (event: any) => {
-    dispatch(changeSelectedPostTitle(event.target.value));
   };
   const handleCreate = () => {
     createPost(post);
@@ -53,91 +52,54 @@ export const DrawerPost = (props: any) => {
 
   return (
     <div>
-      {mode === "Edit" && (
-        <Drawer
-          title="Edit Post"
-          placement="right"
-          width={500}
-          onClose={onClose}
-          visible={visible}
-          extra={
-            <Space>
-              <Button type="primary" onClick={onClose}>
-                Cancel
-              </Button>
-              <Button type="primary" onClick={handleSave} loading={isLoading}>
-                Save
-              </Button>
-            </Space>
-          }
-        >
-          <h1>
-            <UserOutlined />
-            {editPost.userId}
-          </h1>
-          <h1>
-            Title:
-            <TextArea
-              showCount
-              style={{ height: 120 }}
-              value={editPost.title}
-              onChange={handleChangeTitle}
-            />
-          </h1>
-          <h1>
-            Body:
-            <TextArea
-              showCount
-              style={{ height: 240 }}
-              value={editPost.body}
-              onChange={handleChangeBody}
-            />
-          </h1>
-        </Drawer>
-      )}
-      {mode === "Create" && (
-        <Drawer
-          title="Create Post"
-          placement="right"
-          width={500}
-          onClose={onClose}
-          visible={visible}
-          extra={
-            <Space>
-              <Button type="primary" onClick={onClose}>
-                Cancel
-              </Button>
-              <Button type="primary" onClick={handleCreate}>
-                Save
-              </Button>
-            </Space>
-          }
-        >
-          <h1>
-            <UserOutlined /> User ID:
-            <br />
+      <Drawer
+        title={mode === "Edit" ? "Edit Post" : "Create Post"}
+        placement="right"
+        width={500}
+        onClose={onClose}
+        visible={visible}
+        extra={
+          <Space>
+            <Button type="primary" onClick={onClose}>
+              Cancel
+            </Button>
+            <Button
+              type="primary"
+              onClick={mode === "Edit" ? handleSave : handleCreate}
+              loading={isLoading}
+            >
+              Save
+            </Button>
+          </Space>
+        }
+      >
+        <h1>
+          <UserOutlined />
+          {mode === "Edit" ? (
+            selectedPost.userId
+          ) : (
             <InputNumber min={1} onChange={handleCreateUserId} value={post.userId} />
-          </h1>
-          <h1>
-            Title:
-            <TextArea
-              showCount
-              style={{ height: 120 }}
-              onChange={handleCreateTitle}
-              value={post.title}
-            />
-          </h1>
-          <h1>
-            Body:
-            <TextArea
-              showCount
-              style={{ height: 240 }}
-              onChange={handleCreateBody}
-              value={post.body}
-            />
-          </h1>
-        </Drawer>
-      )}
+          )}
+        </h1>
+        <h1>
+          Title:
+          <TextArea
+            showCount
+            style={{ height: 120 }}
+            value={mode === "Edit" ? selectedPost.title : post.title}
+            onChange={mode === "Edit" ? handleChangeTitle : handleCreateTitle}
+          />
+        </h1>
+        <h1>
+          Body:
+          <TextArea
+            showCount
+            style={{ height: 240 }}
+            value={mode === "Edit" ? selectedPost.body : post.body}
+            onChange={mode === "Edit" ? handleChangeBody : handleCreateBody}
+          />
+        </h1>
+      </Drawer>
     </div>
   );
 };

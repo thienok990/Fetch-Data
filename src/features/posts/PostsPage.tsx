@@ -114,11 +114,13 @@ function PostsPage() {
           onShowSizeChange={handleChangeSize}
         />
       )}
-      {selectedPost && (
-        <DrawerPost visible={visible} setVisible={setVisible} editPost={selectedPost} mode={mode} />
-      )}
-      {mode === "Create" && (
-        <DrawerPost visible={visible} setVisible={setVisible} editPost={selectedPost} mode={mode} />
+      {(selectedPost || mode) && (
+        <DrawerPost
+          visible={visible}
+          setVisible={setVisible}
+          selectedPost={selectedPost}
+          mode={mode}
+        />
       )}
     </div>
   );
