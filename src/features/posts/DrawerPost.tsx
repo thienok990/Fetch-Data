@@ -2,14 +2,13 @@ import { Drawer, Button, Space, InputNumber } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import TextArea from "antd/lib/input/TextArea";
 import { changeSelectedPostTitle, changeSelectedPostBody } from "./PostsSlice";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { useUpdatePostMutation, useCreatePostMutation } from "../../services/post";
-import { useState, useEffect } from "react";
-
-const initialNewPost = { id: null, userId: 1, title: "", body: "" };
+import { useEffect } from "react";
 
 export const DrawerPost = (props: any) => {
-  const { visible, setVisible, selectedPost, mode } = props;
+  const { visible, setVisible, mode } = props;
+  const selectedPost = useAppSelector((state) => state.post.selectedPost);
 
   const dispatch = useAppDispatch();
   const [updatePost, { isLoading }] = useUpdatePostMutation();
@@ -19,6 +18,10 @@ export const DrawerPost = (props: any) => {
     setVisible(false);
   };
   const handleSave = () => {
+    if (!selectedPost) {
+      return;
+    }
+
     if (mode === "Edit") {
       updatePost({ ...selectedPost });
     } else {
@@ -31,15 +34,17 @@ export const DrawerPost = (props: any) => {
   const handleChangeTitle = (event: any) => {
     dispatch(changeSelectedPostTitle(event.target.value));
   };
-  const handleChangeUserId = (event: any) => {
-    // dispatch(changeSelectedPostUserId(event.target.value));
-  };
+  const handleChangeUserId = (value: number) => {};
 
   useEffect(() => {
     if (isSuccess) {
       setVisible(false);
     }
   }, [isSuccess, setVisible]);
+
+  if (selectedPost === null) {
+    return <></>;
+  }
 
   return (
     <div>

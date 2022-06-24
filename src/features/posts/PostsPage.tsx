@@ -7,7 +7,6 @@ import DrawerPost from "./DrawerPost";
 
 function PostsPage() {
   const dataSource = useAppSelector((state) => state.post.posts);
-  const selectedPost = useAppSelector((state) => state.post.selectedPost);
 
   const dispatch = useAppDispatch();
   const [deletePost, { isLoading: isDeleting }] = useDeletePostMutation();
@@ -114,14 +113,7 @@ function PostsPage() {
           onShowSizeChange={handleChangeSize}
         />
       )}
-      {(selectedPost || mode) && (
-        <DrawerPost
-          visible={visible}
-          setVisible={setVisible}
-          selectedPost={selectedPost}
-          mode={mode}
-        />
-      )}
+      <DrawerPost visible={visible} setVisible={setVisible} mode={mode} />
     </div>
   );
 }
