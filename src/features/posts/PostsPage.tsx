@@ -4,7 +4,6 @@ import { Table, Pagination, Space, Button } from "antd";
 import { useGetPostsQuery, useDeletePostMutation } from "../../services/post";
 import { selectPost, setPosts } from "./PostsSlice";
 import DrawerPost from "./DrawerPost";
-import ModalPost from "./ModalPost";
 
 function PostsPage() {
   const dataSource = useAppSelector((state) => state.post.posts);
@@ -37,13 +36,13 @@ function PostsPage() {
     {
       title: "Action",
       key: "action",
-      render: (_: any, action: any) => (
+      render: (_: any, currentPost: any) => (
         <Space size="middle">
           <Button
             type="primary"
             onClick={() => {
-              dispatch(selectPost(action));
-              showDrawer();
+              dispatch(selectPost(currentPost));
+              showDrawerEdit();
             }}
           >
             Edit
@@ -52,7 +51,7 @@ function PostsPage() {
             danger
             loading={isDeleting}
             onClick={() => {
-              deletePost(action);
+              deletePost(currentPost);
             }}
           >
             Delete
@@ -65,8 +64,7 @@ function PostsPage() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [limit, setLimit] = useState<number>(10);
   const [visible, setVisible] = useState(false);
-  const [visibleModal, setVisibleModal] = useState(false);
-
+  const [mode, setMode] = useState("");
   const { isLoading, isFetching, data } = useGetPostsQuery({ page: currentPage, limit: limit });
 
   useEffect(() => {
@@ -81,15 +79,23 @@ function PostsPage() {
     setCurrentPage(currentPage);
     setLimit(size);
   };
-  const showDrawer = () => {
+  const showDrawerEdit = () => {
     setVisible(true);
+    setMode("Edit");
   };
-  const showModal = () => {
-    setVisibleModal(true);
+  const showDrawerCreate = () => {
+    setVisible(true);
+    setMode("Create");
   };
 
   return (
     <div>
+      <br />
+      <Button type="primary" onClick={showDrawerCreate}>
+        Create Post
+      </Button>
+      <br />
+      <br />
       <Table
         dataSource={dataSource}
         columns={columns}
@@ -109,13 +115,11 @@ function PostsPage() {
         />
       )}
       {selectedPost && (
-        <DrawerPost visible={visible} setVisible={setVisible} editPost={selectedPost} />
+        <DrawerPost visible={visible} setVisible={setVisible} editPost={selectedPost} mode={mode} />
       )}
-      <br />
-      <Button type="primary" onClick={showModal}>
-        Create Post
-      </Button>
-      <ModalPost visibleModal={visibleModal} setVisibleModal={setVisibleModal} />
+      {mode === "Create" && (
+        <DrawerPost visible={visible} setVisible={setVisible} editPost={selectedPost} mode={mode} />
+      )}
     </div>
   );
 }
