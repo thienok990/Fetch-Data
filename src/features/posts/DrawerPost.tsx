@@ -6,7 +6,7 @@ import { useAppDispatch } from "../../app/hooks";
 import { useUpdatePostMutation, useCreatePostMutation } from "../../services/post";
 import { useState, useEffect } from "react";
 
-const initialNewPost = { id: 0, userId: 1, title: "", body: "" };
+const initialNewPost = { id: null, userId: 1, title: "", body: "" };
 
 export const DrawerPost = (props: any) => {
   const { visible, setVisible, selectedPost, mode } = props;
@@ -14,10 +14,16 @@ export const DrawerPost = (props: any) => {
   const dispatch = useAppDispatch();
   const [updatePost, { isLoading }] = useUpdatePostMutation();
   const [createPost, { isSuccess }] = useCreatePostMutation();
-  const [post, setPost] = useState(initialNewPost);
 
   const onClose = () => {
     setVisible(false);
+  };
+  const handleSave = () => {
+    if (mode === "Edit") {
+      updatePost({ ...selectedPost });
+    } else {
+      createPost({ ...selectedPost });
+    }
   };
   const handleChangeBody = (event: any) => {
     dispatch(changeSelectedPostBody(event.target.value));
@@ -25,20 +31,8 @@ export const DrawerPost = (props: any) => {
   const handleChangeTitle = (event: any) => {
     dispatch(changeSelectedPostTitle(event.target.value));
   };
-  const handleSave = () => {
-    updatePost({ ...selectedPost });
-  };
-  const handleCreateUserId = (value: any) => {
-    setPost({ ...post, userId: value });
-  };
-  const handleCreateTitle = (event: any) => {
-    setPost({ ...post, title: event.target.value });
-  };
-  const handleCreateBody = (event: any) => {
-    setPost({ ...post, body: event.target.value });
-  };
-  const handleCreate = () => {
-    createPost(post);
+  const handleChangeUserId = (event: any) => {
+    // dispatch(changeSelectedPostUserId(event.target.value));
   };
 
   useEffect(() => {
@@ -46,9 +40,6 @@ export const DrawerPost = (props: any) => {
       setVisible(false);
     }
   }, [isSuccess, setVisible]);
-  useEffect(() => {
-    setPost(initialNewPost);
-  }, [visible]);
 
   return (
     <div>
@@ -63,11 +54,7 @@ export const DrawerPost = (props: any) => {
             <Button type="primary" onClick={onClose}>
               Cancel
             </Button>
-            <Button
-              type="primary"
-              onClick={mode === "Edit" ? handleSave : handleCreate}
-              loading={isLoading}
-            >
+            <Button type="primary" onClick={handleSave} loading={isLoading}>
               Save
             </Button>
           </Space>
@@ -78,7 +65,7 @@ export const DrawerPost = (props: any) => {
           {mode === "Edit" ? (
             selectedPost.userId
           ) : (
-            <InputNumber min={1} onChange={handleCreateUserId} value={post.userId} />
+            <InputNumber min={1} onChange={handleChangeUserId} value={selectedPost.userId} />
           )}
         </h1>
         <h1>
@@ -86,8 +73,8 @@ export const DrawerPost = (props: any) => {
           <TextArea
             showCount
             style={{ height: 120 }}
-            value={mode === "Edit" ? selectedPost.title : post.title}
-            onChange={mode === "Edit" ? handleChangeTitle : handleCreateTitle}
+            value={selectedPost.title}
+            onChange={handleChangeTitle}
           />
         </h1>
         <h1>
@@ -95,8 +82,8 @@ export const DrawerPost = (props: any) => {
           <TextArea
             showCount
             style={{ height: 240 }}
-            value={mode === "Edit" ? selectedPost.body : post.body}
-            onChange={mode === "Edit" ? handleChangeBody : handleCreateBody}
+            value={selectedPost.body}
+            onChange={handleChangeBody}
           />
         </h1>
       </Drawer>
