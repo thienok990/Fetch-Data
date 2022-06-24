@@ -4,6 +4,7 @@ import { Table, Pagination, Space, Button } from "antd";
 import { useGetPostsQuery, useDeletePostMutation } from "../../services/post";
 import { selectPost, setPosts } from "./PostsSlice";
 import DrawerPost from "./DrawerPost";
+import ModalPost from "./ModalPost";
 
 function PostsPage() {
   const dataSource = useAppSelector((state) => state.post.posts);
@@ -64,6 +65,7 @@ function PostsPage() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [limit, setLimit] = useState<number>(10);
   const [visible, setVisible] = useState(false);
+  const [visibleModal, setVisibleModal] = useState(false);
 
   const { isLoading, isFetching, data } = useGetPostsQuery({ page: currentPage, limit: limit });
 
@@ -81,6 +83,9 @@ function PostsPage() {
   };
   const showDrawer = () => {
     setVisible(true);
+  };
+  const showModal = () => {
+    setVisibleModal(true);
   };
 
   return (
@@ -106,6 +111,11 @@ function PostsPage() {
       {selectedPost && (
         <DrawerPost visible={visible} setVisible={setVisible} editPost={selectedPost} />
       )}
+      <br />
+      <Button type="primary" onClick={showModal}>
+        Create Post
+      </Button>
+      <ModalPost visibleModal={visibleModal} setVisibleModal={setVisibleModal} />
     </div>
   );
 }

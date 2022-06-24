@@ -39,7 +39,24 @@ export const postApi = createApi({
       }),
       invalidatesTags: ["Post"],
     }),
+    createPost: builder.mutation<Post, Post>({
+      query: ({ userId, title, body }) => ({
+        url: `/`,
+        method: "POST",
+        body: {
+          userId,
+          title,
+          body,
+        },
+      }),
+      invalidatesTags: ["Post"],
+    }),
   }),
 });
 
-export const { useGetPostsQuery, useUpdatePostMutation, useDeletePostMutation } = postApi;
+export const {
+  useGetPostsQuery,
+  useUpdatePostMutation,
+  useDeletePostMutation,
+  useCreatePostMutation,
+} = postApi;
