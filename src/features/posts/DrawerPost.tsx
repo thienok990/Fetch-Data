@@ -1,7 +1,7 @@
 import { Drawer, Button, Space, InputNumber } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import TextArea from "antd/lib/input/TextArea";
-import { changeSelectedPostTitle, changeSelectedPostBody, selectPost } from "./PostsSlice";
+import { changeSelectedPostTitle, changeSelectedPostBody } from "./PostsSlice";
 import { useAppDispatch } from "../../app/hooks";
 import { useUpdatePostMutation, useCreatePostMutation } from "../../services/post";
 import { useState, useEffect } from "react";
