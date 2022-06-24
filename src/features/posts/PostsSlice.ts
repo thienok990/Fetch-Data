@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { postApi } from "../../services/post";
 
 export interface Post {
@@ -57,7 +57,7 @@ export const PostsSlice = createSlice({
     setPosts: (state, action) => {
       state.posts = action.payload;
     },
-    selectPost: (state, action) => {
+    selectPost: (state, action: PayloadAction<Post>) => {
       state.selectedPost = action.payload;
     },
     changeSelectedPostTitle: (state, action) => {

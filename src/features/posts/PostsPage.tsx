@@ -10,12 +10,7 @@ function PostsPage() {
 
   const dispatch = useAppDispatch();
   const [deletePost, { isLoading: isDeleting }] = useDeletePostMutation();
-  const initialPost = {
-    id: 0,
-    userId: 1,
-    tilte: "",
-    string: "",
-  };
+
   const columns = [
     {
       title: "ID",
@@ -98,7 +93,14 @@ function PostsPage() {
       <Button
         type="primary"
         onClick={() => {
-          dispatch(selectPost(initialPost));
+          dispatch(
+            selectPost({
+              id: 0,
+              userId: 1,
+              title: "",
+              body: "",
+            })
+          );
           showDrawerCreate();
         }}
       >
