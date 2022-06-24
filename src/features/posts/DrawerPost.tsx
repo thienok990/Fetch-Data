@@ -1,7 +1,11 @@
 import { Drawer, Button, Space, InputNumber } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import TextArea from "antd/lib/input/TextArea";
-import { changeSelectedPostTitle, changeSelectedPostBody } from "./PostsSlice";
+import {
+  changeSelectedPostTitle,
+  changeSelectedPostBody,
+  changeSelectedPostUserId,
+} from "./PostsSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { useUpdatePostMutation, useCreatePostMutation } from "../../services/post";
 import { useEffect } from "react";
@@ -34,7 +38,9 @@ export const DrawerPost = (props: any) => {
   const handleChangeTitle = (event: any) => {
     dispatch(changeSelectedPostTitle(event.target.value));
   };
-  const handleChangeUserId = (value: number) => {};
+  const handleChangeUserId = (value: number) => {
+    dispatch(changeSelectedPostUserId(value));
+  };
 
   useEffect(() => {
     if (isSuccess) {

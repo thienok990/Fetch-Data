@@ -67,7 +67,7 @@ function PostsPage() {
   const { isLoading, isFetching, data } = useGetPostsQuery({ page: currentPage, limit: limit });
 
   useEffect(() => {
-    dispatch(setPosts(data?.posts));
+    dispatch(setPosts(data?.posts || []));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 

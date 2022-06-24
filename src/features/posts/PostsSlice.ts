@@ -54,20 +54,25 @@ export const PostsSlice = createSlice({
   name: "post",
   initialState,
   reducers: {
-    setPosts: (state, action) => {
+    setPosts: (state, action: PayloadAction<Post[]>) => {
       state.posts = action.payload;
     },
     selectPost: (state, action: PayloadAction<Post>) => {
       state.selectedPost = action.payload;
     },
-    changeSelectedPostTitle: (state, action) => {
+    changeSelectedPostTitle: (state, action: PayloadAction<string>) => {
       if (state.selectedPost != null) {
         state.selectedPost.title = action.payload;
       }
     },
-    changeSelectedPostBody: (state, action) => {
+    changeSelectedPostBody: (state, action: PayloadAction<string>) => {
       if (state.selectedPost != null) {
         state.selectedPost.body = action.payload;
+      }
+    },
+    changeSelectedPostUserId: (state, action: PayloadAction<number>) => {
+      if (state.selectedPost != null) {
+        state.selectedPost.userId = action.payload;
       }
     },
   },
@@ -82,7 +87,12 @@ export const PostsSlice = createSlice({
   },
 });
 
-export const { setPosts, selectPost, changeSelectedPostTitle, changeSelectedPostBody } =
-  PostsSlice.actions;
+export const {
+  setPosts,
+  selectPost,
+  changeSelectedPostTitle,
+  changeSelectedPostBody,
+  changeSelectedPostUserId,
+} = PostsSlice.actions;
 
 export default PostsSlice.reducer;
