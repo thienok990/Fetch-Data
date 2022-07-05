@@ -2,6 +2,7 @@ import { Layout, Menu } from "antd";
 import { Routes, Route, Link, useLocation, Navigate } from "react-router-dom";
 import CounterPage from "./features/counter/CounterPage";
 import PostPage from "./features/posts/PostsPage";
+import CommentPage from "./features/comments/CommentsPage";
 import React from "react";
 
 const { Header, Content, Footer } = Layout;
@@ -10,6 +11,10 @@ const pages = [
   {
     key: "/post",
     label: <Link to="/post">Posts</Link>,
+  },
+  {
+    key: "/comment",
+    label: <Link to="/comment">Comments</Link>,
   },
   {
     key: "/counter",
@@ -31,6 +36,7 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/" element={<Navigate to="/post" replace={true} />} />
             <Route path="/post" element={<PostPage />} />
+            <Route path="/comment" element={<CommentPage />} />
             <Route path="/counter" element={<CounterPage />} />
           </Routes>
         </div>
